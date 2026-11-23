@@ -6,7 +6,7 @@
   'use strict';
   const XO = window.XO, $ = XO.$;
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
-  const FORMAT = 1, APP_VERSION = '5.0.0', RECENT_MAX = 6;
+  const FORMAT = 1, APP_VERSION = '5.1.0', RECENT_MAX = 6;
   const P = (XO.project = { name: 'UNTITLED', dirty: false, includeMedia: true });
 
   /* ------------------------------ zip (store only, no compression) ------------------------------ */
