@@ -43,7 +43,7 @@ try {
   check('loads from app:// (offline, no server)', page.url().startsWith('app://xo-lab/'), page.url());
   check('desktop bridge present', await page.evaluate(() => !!window.xoDesktop && typeof window.xoDesktop.onMenu === 'function' && typeof require === 'undefined'));
   const info = await page.evaluate(() => window.xoDesktop.info());
-  check('app version 5.0.0', info.version === '5.0.0', `Electron ${info.electron} · Chromium ${info.chrome} · ${info.platform}-${info.arch}`);
+  check('app version 5.1.0', info.version === '5.1.0', `Electron ${info.electron} · Chromium ${info.chrome} · ${info.platform}-${info.arch}`);
   await page.click('#enter');
   check('status shows the desktop app', /APP/.test(await page.textContent('#topStatus')), await page.textContent('#topStatus'));
   const env = await page.evaluate(async () => {

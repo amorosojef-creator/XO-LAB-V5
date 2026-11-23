@@ -141,6 +141,21 @@ try {
   const oldScene = await page.evaluate(() => { XO.applySnapshot(XO.migrate({ blob: { sens: 33 } }, '3.1.0')); const ok = XO.S.blob.sens === 33 && XO.S.model.material === 'original' && XO.S.out.size === '1080'; XO.resetAll(); XO.afterLoadState(); return ok; });
   check('V3 scene migrates (missing settings get defaults)', oldScene);
 
+  // ---------------- v5.1: mission-control UI ----------------
+  const ui = await page.evaluate(async () => {
+    const wait = (ms) => new Promise((r) => setTimeout(r, ms));
+    document.querySelector('[data-strip="presets"]').click(); await wait(50);
+    const presetCards = document.querySelectorAll('#assetStrip [data-item]').length;
+    document.querySelector('#assetStrip [data-item]').click(); await wait(250);
+    const fxApplied = XO.S.fx.stack.length > 0 && document.querySelectorAll('#tcFx [data-fxm]').length === XO.S.fx.stack.length;
+    document.querySelector('[data-strip="scenes"]').click(); XO.scenes.save('UI SCENE'); XO.renderScenes(); await wait(200);
+    const card = document.querySelector('#assetStrip [data-item="UI SCENE"]'); if (card) card.click(); await wait(200);
+    const live = !!document.querySelector('#assetStrip .asset.live[data-item="UI SCENE"]');
+    XO.scenes.remove('UI SCENE'); XO.renderScenes(); XO.S.fx.stack = []; XO.afterLoadState();
+    return { presetCards, fxApplied, live, gauge: !!document.getElementById('gaugeFill'), theme: getComputedStyle(document.documentElement).getPropertyValue('--panel').trim() };
+  });
+  check('mission-control UI: strip, FX card, live scene, theme', ui.presetCards > 0 && ui.fxApplied && ui.live && ui.gauge && ui.theme === '#151517', JSON.stringify(ui));
+
   check('no page errors', !errors.length, errors.slice(0, 3).join(' | '));
 } finally {
   await browser.close(); server.kill(); fs.rmSync(tmp, { recursive: true, force: true });
