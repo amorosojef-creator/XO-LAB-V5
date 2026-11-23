@@ -1,5 +1,26 @@
 # XO LAB — Changelog
 
+## 5.1.0 — New "mission control" look
+
+A visual and layout redesign only. Every feature works exactly as before (audio analysis, 3D models, filters, blob HUD, strobe, scenes, projects, undo/redo, export).
+
+### New look
+- Monochrome graphite panels with hairline borders, soft depth and one accent colour (red by default) used only for live, alerts and active states.
+- Space Grotesk for labels and headings, JetBrains Mono for numbers and telemetry. Both fonts are bundled, so the app still works fully offline (SIL Open Font License, see `assets/fonts`).
+- All colours, radii, fonts and spacing live in one file: `css/theme.css`.
+
+### New layout
+- **Top bar:** EDIT · PERFORM · OVERLAY layout switch, live BPM, bar.beat counter, audio and GPU status, undo/redo/project, and a **UI** menu with the accent colour picker and the callout switch.
+- **Telemetry cards (left):** AUDIO (level gauge + BPM), BANDS (kick/bass, mid, hats/high with thresholds), FX CHAIN (tap a filter to switch it on/off), OUTPUT (resolution, fps, source, blobs). Each card's button jumps to its settings panel.
+- **Preview callouts:** live BPM, bass, FX/blob count and level labels with leader lines and an orbit ring that pulses with the bass. UI only — never part of the exported video. Toggle with the labels button or the UI menu.
+- **Strip under the preview:** SCENES (with a thumbnail captured when you save, LIVE tag on the loaded scene, keys 1–9), FX PRESETS and 3D MOTION presets as cards. Palette dropdown, shuffle, loop track, fullscreen and show/hide panel buttons.
+- **Control panel (right):** the same panels as before, restyled; can be hidden.
+- **iPhone:** preview and transport stay pinned at the top; telemetry cards swipe sideways; strip and panels scroll below. Pinch still never zooms the interface.
+
+### Tests
+- Smoke test: new check for the strip, FX card, live scene and theme.
+- Desktop smoke test: expects version 5.1.0.
+
 ## 5.0.0 — Phase 1: desktop apps + foundation
 
 ### New

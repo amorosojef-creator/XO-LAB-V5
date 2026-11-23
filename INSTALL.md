@@ -5,8 +5,8 @@ GitHub builds every version for you: iPhone, Windows and Mac. You don't need Xco
 | Device | File you install | Works on |
 | --- | --- | --- |
 | iPhone / iPad | `XO-LAB.ipa` | iPhone with iOS 16.4 or newer (video export needs 16.4+) |
-| Windows PC | `XO-LAB-Setup-5.0.0-x64.exe` (most PCs) · `-arm64.exe` (Snapdragon PCs) | Windows 10 and 11, 64-bit |
-| Mac | `XO-LAB-5.0.0.dmg` or `XO-LAB-5.0.0.pkg` | macOS 12 Monterey or newer, Intel and Apple Silicon |
+| Windows PC | `XO-LAB-Setup-5.1.0-x64.exe` (most PCs) · `-arm64.exe` (Snapdragon PCs) | Windows 10 and 11, 64-bit |
+| Mac | `XO-LAB-5.1.0.dmg` or `XO-LAB-5.1.0.pkg` | macOS 12 Monterey or newer, Intel and Apple Silicon |
 
 > **Why macOS 12?** That's the oldest version the desktop engine (Electron 43) still supports. Older Macs that can't update to Monterey can use the browser version instead (see the end of this page).
 
@@ -32,7 +32,7 @@ GitHub builds every version for you: iPhone, Windows and Mac. You don't need Xco
 
    Each one downloads as a zip; unzip it to get the file.
 
-> **Permanent download page (optional):** Releases → **Draft a new release** → tag `v5.0.0` → **Publish**. When the build finishes, every installer is attached to that release.
+> **Permanent download page (optional):** Releases → **Draft a new release** → tag `v5.1.0` → **Publish**. When the build finishes, every installer is attached to that release.
 
 ---
 
@@ -40,15 +40,15 @@ GitHub builds every version for you: iPhone, Windows and Mac. You don't need Xco
 
 ### Windows
 
-1. Double-click **XO-LAB-Setup-5.0.0-x64.exe**.
+1. Double-click **XO-LAB-Setup-5.1.0-x64.exe**.
 2. Blue "Windows protected your PC" box? Click **More info → Run anyway**. (It appears because the app isn't signed with a paid certificate.)
 3. Follow the installer. XO LAB appears on your desktop and in the Start menu.
 
-**No install:** `XO-LAB-Portable-5.0.0-x64.exe` runs straight from a USB stick or the Downloads folder.
+**No install:** `XO-LAB-Portable-5.1.0-x64.exe` runs straight from a USB stick or the Downloads folder.
 
 ### Mac — .dmg (recommended)
 
-1. Double-click **XO-LAB-5.0.0.dmg** and drag **XO LAB** onto **Applications**.
+1. Double-click **XO-LAB-5.1.0.dmg** and drag **XO LAB** onto **Applications**.
 2. Open XO LAB from Applications. macOS says it can't check the app — click **Done** (or **OK**).
 3. Open **System Settings → Privacy & Security**, scroll down and click **Open Anyway** next to XO LAB, then confirm with your password.
 4. From now on it opens normally.
@@ -57,7 +57,7 @@ GitHub builds every version for you: iPhone, Windows and Mac. You don't need Xco
 
 ### Mac — .pkg (installer)
 
-1. Double-click **XO-LAB-5.0.0.pkg**. If macOS blocks it: **System Settings → Privacy & Security → Open Anyway**.
+1. Double-click **XO-LAB-5.1.0.pkg**. If macOS blocks it: **System Settings → Privacy & Security → Open Anyway**.
 2. Click through the installer. XO LAB is placed in Applications.
 3. The first time you open the app, do steps 2–3 from the .dmg section above.
 

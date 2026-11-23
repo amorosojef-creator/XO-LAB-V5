@@ -2,6 +2,16 @@
 
 The automatic tests run on every build (Actions tab → **Test** jobs). They can't touch a real phone, PC or Mac, so tick these by hand after installing a new build.
 
+## 5.1 new look (any device)
+- [ ] Top bar: EDIT / PERFORM / OVERLAY switch layouts; the choice is remembered after reopening
+- [ ] Telemetry cards move with the music (level gauge, band lines, BPM)
+- [ ] FX CHAIN card: tapping a filter switches it on/off
+- [ ] Strip: SAVE SCENE adds a card with a thumbnail; tapping a card loads it and shows LIVE
+- [ ] FX PRESETS and 3D MOTION cards apply presets
+- [ ] UI menu: changing the accent colour recolours live/active marks
+- [ ] Callout labels show on the preview but are NOT in the exported video
+- [ ] iPhone: preview stays at the top while scrolling the panels; pinch does not zoom
+
 ## Phase 1
 
 ### Mac (your MacBook)

@@ -24,6 +24,7 @@ Audio-reactive live visuals for DJs. Video, images and 3D models are driven by y
 - `npm run desktop` runs the Windows/Mac app from source (Electron 43).
 - `npm run dist:win` / `npm run dist:mac` build installers locally (CI does this for you).
 - `npm test` is a headless-Chrome smoke test including a real render. `npm run test:desktop` runs the same kind of test inside the desktop app (use `xvfb-run` on Linux).
+- The look is set in `css/theme.css` (colours, radii, fonts, spacing). `js/hud.js` adds the telemetry cards, preview callouts, scene/preset strip and layout views on top of the app.
 - `electron/main.js` is the desktop wrapper. It serves `www/` from a private `app://` address with no Node access in the page; `electron/preload.js` is the only bridge.
 
 Third-party code: three.js (MIT, `vendor/three`), Mediabunny (MPL-2.0, `vendor/mediabunny`), Electron (MIT).

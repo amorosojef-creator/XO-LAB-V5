@@ -6,7 +6,7 @@
   <meta name="format-detection" content="telephone=no" />
   <title>XO LAB</title>
   <meta name="description" content="XO LAB — audio-reactive live visuals for DJs. Runs locally in your browser, on iPhone, Windows and Mac." />
-  <meta name="theme-color" content="#000000" />
+  <meta name="theme-color" content="#0b0b0c" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
@@ -14,6 +14,7 @@
   <link rel="manifest" href="manifest.webmanifest" />
   <link rel="icon" type="image/png" sizes="32x32" href="assets/icons/xo-emblem-32.png" />
   <link rel="apple-touch-icon" href="assets/icons/xo-emblem-180.png" />
+  <link rel="stylesheet" href="css/theme.css" />
   <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
@@ -34,14 +35,74 @@
     <header class="topbar">
       <div class="brand-wordmark top-wordmark"><img src="assets/brand/Futuristic XO LAB Wordmark.png" alt="XO LAB" /></div>
       <div class="top-title">VISUAL ENGINE <span>///</span></div>
+      <nav class="view-pills" id="viewPills" aria-label="Layout">
+        <button type="button" data-view="edit" aria-pressed="true">EDIT</button>
+        <button type="button" data-view="perform" aria-pressed="false">PERFORM</button>
+        <button type="button" data-view="overlay" aria-pressed="false">OVERLAY</button>
+      </nav>
+      <div class="top-readout" id="topReadout" aria-label="Session status">
+        <span class="ro"><span class="ro-k">BPM</span> <b id="roBpm">—</b></span>
+        <span class="ro"><span class="ro-k">BEAT</span> <b id="roBeat">1.1</b></span>
+        <span class="ro"><i class="dot" id="roAudioDot"></i><span id="roAudio">AUDIO OFF</span></span>
+        <span class="ro"><i class="dot" id="roGpuDot"></i><span id="roGpu">GPU</span></span>
+      </div>
       <div class="top-status" id="topStatus">LOCAL SESSION</div>
+      <button class="tool ui-btn" id="uiBtn" type="button" aria-haspopup="dialog" aria-expanded="false" aria-controls="uiPop" title="Interface settings">UI</button>
+      <div class="ui-pop" id="uiPop" role="dialog" aria-label="Interface settings" hidden>
+        <div class="opt-label">ACCENT COLOUR</div>
+        <div class="accent-row" id="accentRow"></div>
+        <label class="toggle compact">Callout labels on the preview <input type="checkbox" id="uiCallouts" checked /><i></i></label>
+        <div class="hint">The accent is only used for live, alerts and active states. Saved on this device.</div>
+      </div>
     </header>
 
     <main class="workspace">
+      <aside class="telemetry" id="telemetry" aria-label="Telemetry">
+        <section class="tcard" data-card="audio">
+          <div class="tcard-head"><span>AUDIO</span><button class="icon-btn" type="button" data-goto="media" aria-label="Open audio settings" title="Audio settings"><svg viewBox="0 0 24 24"><path d="M4 12h3l3-6 4 12 3-6h3"/></svg></button></div>
+          <div class="gauge">
+            <svg viewBox="0 0 120 68" aria-hidden="true"><path class="g-track" d="M10 62a50 50 0 0 1 100 0"/><path class="g-fill" id="gaugeFill" d="M10 62a50 50 0 0 1 100 0" pathLength="100"/><g class="g-ticks"><path d="M10 62h6M104 62h6M60 12v6M24.6 26.6l4.2 4.2M95.4 26.6l-4.2 4.2"/></g></svg>
+            <div class="g-val"><b id="gaugeVal">0</b><small>% LEVEL</small></div>
+          </div>
+          <div class="tcard-foot"><span id="tcAudioState">NO TRACK</span><span id="tcBpm">— BPM</span></div>
+        </section>
+        <section class="tcard" data-card="bands">
+          <div class="tcard-head"><span>BANDS</span><button class="icon-btn" type="button" data-goto="media" aria-label="Open hit thresholds" title="Hit thresholds"><svg viewBox="0 0 24 24"><path d="M5 19V9M12 19V5M19 19v-7"/></svg></button></div>
+          <div class="bars" id="tcBars">
+            <div class="bar-row" data-band="bass"><span>KICK / BASS</span><div class="line-meter"><i></i><b></b></div><output>0.00</output><em></em></div>
+            <div class="bar-row" data-band="mid"><span>MID</span><div class="line-meter"><i></i><b></b></div><output>0.00</output><em></em></div>
+            <div class="bar-row" data-band="high"><span>HATS / HIGH</span><div class="line-meter"><i></i><b></b></div><output>0.00</output><em></em></div>
+          </div>
+        </section>
+        <section class="tcard" data-card="fx">
+          <div class="tcard-head"><span>FX CHAIN</span><button class="icon-btn" type="button" data-goto="fx" aria-label="Edit filters" title="Edit filters"><svg viewBox="0 0 24 24"><path d="M4 7h10M18 7h2M4 17h2M10 17h10"/><circle cx="16" cy="7" r="2"/><circle cx="8" cy="17" r="2"/></svg></button></div>
+          <div class="fx-mini" id="tcFx"></div>
+        </section>
+        <section class="tcard" data-card="system">
+          <div class="tcard-head"><span>OUTPUT</span><button class="icon-btn" type="button" data-goto="output" aria-label="Open export settings" title="Export settings"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="11" rx="1.5"/><path d="M9 20h6M12 16.5V20"/></svg></button></div>
+          <dl class="kv" id="tcSys">
+            <div><dt>RES</dt><dd id="tcRes">1920×1080</dd></div>
+            <div><dt>FPS</dt><dd id="tcFps">—</dd></div>
+            <div><dt>SOURCE</dt><dd id="tcSrc">NONE</dd></div>
+            <div><dt>BLOBS</dt><dd id="tcBlobs">—</dd></div>
+          </dl>
+        </section>
+      </aside>
+
       <section class="stage-col">
+        <div class="stage-wrap">
         <div class="stage" id="stage">
           <canvas id="view" width="1920" height="1080" aria-label="Live preview"></canvas>
           <div class="frame-corners" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+          <div class="callouts" id="callouts" aria-hidden="true" hidden>
+            <svg class="co-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="20,25 30,25 41,40"/><polyline points="80,30 70,30 59,42"/><polyline points="20,76 30,76 42,61"/><polyline points="80,74 70,74 58,60"/></svg>
+            <div class="orbit" id="coOrbit"><i></i></div>
+            <i class="xh x1" style="left:41%;top:40%"></i><i class="xh x2" style="left:59%;top:42%"></i><i class="xh x3" style="left:42%;top:61%"></i><i class="xh x4" style="left:58%;top:60%"></i>
+            <div class="co ca" style="left:20%;top:25%" data-side="l"><b id="coA">BPM —</b><small>TEMPO</small></div>
+            <div class="co cb" style="left:80%;top:30%" data-side="r"><b id="coB">BASS 0.00</b><small>KICK → SCALE</small></div>
+            <div class="co cc" style="left:20%;top:76%" data-side="l"><b id="coC">FX 0</b><small>FILTER CHAIN</small></div>
+            <div class="co cd" style="left:80%;top:74%" data-side="r"><b id="coD">LEVEL 0%</b><small>MASTER</small></div>
+          </div>
           <div class="focus-mark" id="focusMark" hidden></div>
           <div class="empty" id="empty">
             <b>Drop in a visual to begin</b>
@@ -69,9 +130,29 @@
           <input class="timeline range" id="seek" type="range" min="0" max="1000" value="0" step="1" aria-label="Scrub" disabled />
           <div class="leds" aria-label="Band hits"><i id="ledBass" title="Bass"></i><i id="ledMid" title="Mid"></i><i id="ledHigh" title="High"></i></div>
         </div>
+        </div>
+
+        <div class="stage-bar" id="stageBar">
+          <div class="chips" role="tablist" aria-label="Strip shows">
+            <button type="button" role="tab" data-strip="scenes" aria-selected="true">SCENES</button>
+            <button type="button" role="tab" data-strip="presets" aria-selected="false">FX PRESETS</button>
+            <button type="button" role="tab" data-strip="motion" aria-selected="false">3D MOTION</button>
+          </div>
+          <select id="paletteSelect" aria-label="Apply a colour palette"></select>
+          <div class="sq-group">
+            <button class="sq" id="sqShuffle" type="button" aria-label="Load a random card from the strip" title="Shuffle"><svg viewBox="0 0 24 24"><path d="M4 7h3c4 0 6 10 10 10h3M4 17h3c1.6 0 2.8-1.6 3.9-3.6M14 9.6C15 8 16 7 17 7h3M18 4l3 3-3 3M18 14l3 3-3 3"/></svg></button>
+            <button class="sq" id="sqLoop" type="button" aria-label="Loop the audio track" aria-pressed="true" title="Loop track"><svg viewBox="0 0 24 24"><path d="M4 11V9a3 3 0 0 1 3-3h12l-3-3M20 13v2a3 3 0 0 1-3 3H5l3 3"/></svg></button>
+            <button class="sq" id="sqLabels" type="button" aria-label="Show callout labels" aria-pressed="true" title="Callout labels"><svg viewBox="0 0 24 24"><path d="M4 18l6-6h6"/><circle cx="4" cy="18" r="1.5"/><path d="M16 9h4v6h-4z"/></svg></button>
+            <button class="sq" id="sqFull" type="button" aria-label="Fullscreen preview" title="Fullscreen"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/></svg></button>
+            <button class="sq" id="sqSide" type="button" aria-label="Show or hide the control panel" aria-pressed="true" title="Control panel"><svg viewBox="0 0 24 24"><rect x="3.5" y="4.5" width="17" height="15" rx="2"/><path d="M14.5 4.5v15"/></svg></button>
+          </div>
+        </div>
+
+        <div class="asset-strip" id="assetStrip" aria-label="Scenes"></div>
       </section>
 
-      <div class="side">
+      <div class="side" id="side">
+        <div class="side-head"><span>CONTROLS</span><button class="icon-btn" id="sideClose" type="button" aria-label="Hide the control panel" title="Hide panel"><svg viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></svg></button></div>
         <nav class="tabbar" id="tabbar" aria-label="Panels"></nav>
         <aside class="panels" id="panels"></aside>
       </div>
@@ -107,5 +188,6 @@
   <script src="js/project.js"></script>
   <script src="js/app.js"></script>
   <script src="js/desktop.js"></script>
+  <script src="js/hud.js"></script>
 </body>
 </html>

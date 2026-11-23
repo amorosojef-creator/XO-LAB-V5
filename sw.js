@@ -1,12 +1,14 @@
 /* XO LAB service worker — caches the app shell so it opens offline once installed.
    Imported media never touches the network; it stays as local blob URLs in the page. */
-const CACHE = 'xo-lab-v5.0.0';
+const CACHE = 'xo-lab-v5.1.0';
 const SHELL = [
-  './', './index.html', './manifest.webmanifest', './css/app.css',
+  './', './index.html', './manifest.webmanifest', './css/theme.css', './css/app.css',
   './js/words.js', './js/look3d.js', './js/settings.js', './js/ui.js', './js/schema.js', './js/filters.js', './js/audio.js', './js/gl.js',
-  './js/model3d.js', './js/blobs.js', './js/strobe.js', './js/exporter.js', './js/history.js', './js/project.js', './js/app.js', './js/desktop.js',
+  './js/model3d.js', './js/blobs.js', './js/strobe.js', './js/exporter.js', './js/history.js', './js/project.js', './js/app.js', './js/desktop.js', './js/hud.js',
   './vendor/three/three-all-0.170.0.bundle.js', './vendor/mediabunny/mediabunny-subset.js', './vendor/three/draco-decoder-inline.js',
   './assets/brand/Futuristic XO LAB Wordmark.png', './assets/brand/Futuristic XO emblem on black.png',
+  './assets/fonts/space-grotesk-latin-400-normal.woff2', './assets/fonts/space-grotesk-latin-500-normal.woff2', './assets/fonts/space-grotesk-latin-700-normal.woff2',
+  './assets/fonts/jetbrains-mono-latin-400-normal.woff2', './assets/fonts/jetbrains-mono-latin-600-normal.woff2',
   './assets/icons/xo-emblem-32.png', './assets/icons/xo-emblem-180.png', './assets/icons/xo-emblem-192.png', './assets/icons/xo-emblem-512.png',
 ];
 
